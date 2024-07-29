@@ -1,0 +1,60 @@
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation: portrait) {
+/* For portrait layouts only */
+header .uk-navbar-nav > li > a {
+padding: 0 15px;
+}
+.uk-subnav > * > :first-child {
+font-size: 12px;
+padding: 5px 5px;
+}
+}
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation: landscape) {
+/* For landscape layouts only */
+header .uk-navbar-nav > li > a {
+padding: 0 15px;
+}
+.uk-subnav > * > :first-child {
+font-size: 12px;
+padding: 5px 5px;
+}
+.uk-pull-top {
+margin-top: -110px !important;
+margin-bottom: 20px !important;
+}
+}
+
+@media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+header .uk-navbar-nav > li > a {
+padding: 0 5px !important;
+}
+.uk-top-header {
+font-size: 12px !important;
+}
+}
+
+@media screen and (max-device-width: 640px) {
+	.uk-circle {
+   width: 100% !important;
+    height: 100% !important;
+    background: #00000061 !important;
+    clip-path: none !important; 
+}
+.home-page-slider h1.text-primary,
+.home-page-slider div.text-black 
+{
+	color: var(--white) !important;
+}
+.home-page-slider .uk-button-primary-outline
+{
+	border: solid 2px var(--white);
+    color: var(--white);
+}
+.uk-logo img {
+width: 80px;
+}
+.uk-pull-top {
+margin-top: -100px !important;
+margin-bottom: 20px !important;
+}
+}
