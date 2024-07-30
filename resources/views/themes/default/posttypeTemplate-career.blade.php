@@ -4,11 +4,13 @@
 @section('meta_description', $data->meta_description)
 @section('content')
     <!-- header -->
-    <div uk-alert>
-        {{ session('applicant_message') }}
+    @if(session('applicant_message'))
+        <div uk-alert>
+            {{ session('applicant_message') }}
 
-        <a href class="uk-alert-close" uk-close></a>
-    </div>
+            <a href class="uk-alert-close" uk-close></a>
+        </div>
+    @endif
     <section
         class="uk-cover-container  uk-position-relative uk-flex uk-flex-middle uk-background-norepeat uk-background-cover"
         style="background:url({{ asset('uploads/medium/' . $data->banner) }});">
@@ -61,10 +63,11 @@
                                     @if ($user->status == 1)
                                         <a href="{{ url(geturl($row['uri'], $row['page_key'])) }}">Apply Now >></a>
                                     @else
-                                        <p>Your account is yet to be approved. Please come back later.</p>
+                                        <p>Please verify your account with the email sent to your email address.</p>
                                     @endif
                                 @else
-                                    <a href="{{ route('applicant.login') }}">Know More >></a>
+                                <a href="{{ route('applicant.login') }}" style="font-weight:bold;">Know More >></a>
+
                                 @endif
 
                             </div>

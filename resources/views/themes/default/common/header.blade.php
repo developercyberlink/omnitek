@@ -66,7 +66,12 @@
                                                 @endif
                                             @endforeach
                                             <li>
-                                                <a href="{{ route('applicant.login') }}">Login </a>
+                                                
+                                                @if(Auth::guard('applicant')->check())
+                                                    <!-- <a href="{{ route('applicant.logout') }}">Logout</a> -->
+                                                @else
+                                                    <a href="{{ route('applicant.login') }}">Login</a>
+                                                @endif
                                             </li>
                                             <li>
                                                 <a href="{{ route('applicant.register') }}">Register </a>
@@ -78,8 +83,24 @@
                             </div>
                             <!-- social media icon -->
                             <div id="social" class="uk-text-right@m uk-text-center uk-margin-large-left">
-                                <a class="facebookBtn smGlobalBtn" href="{{ $setting->facebook_link }}"></a>
-                                <a class="twitterBtn smGlobalBtn" href="{{ $setting->twitter_link }}"></a>
+                                @if(Auth::guard('applicant')->check())
+                                    <div class="uk-inline">
+                                        <a class="uk-button uk-button-default" href="#">Hi {{ Auth::guard('applicant')->user()->first_name }} {{ Auth::guard('applicant')->user()->last_name }}</a>
+                                        <div uk-dropdown="pos: bottom-left" class="uk-width-auto">
+                                            <ul class="uk-nav uk-dropdown-nav">
+                                                <li><a href="{{ route('applicant.logout') }}">Logout</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                @else
+                                    <!-- <div class="uk-inline">
+                                        <span class="uk-text-default uk-text-emphasis" style="cursor: default;">Welcome</span>
+                                    </div> -->
+
+                                @endif
+
+                                <!-- <a class="facebookBtn smGlobalBtn" href="{{ $setting->facebook_link }}"></a>
+                                <a class="twitterBtn smGlobalBtn" href="{{ $setting->twitter_link }}"></a> -->
                                 <!-- <a class="instagramBtn smGlobalBtn" href="#"></a>
                             <a class="youtubeBtn smGlobalBtn" href="#"></a>
                             <a class="linkedinBtn smGlobalBtn" href="#"></a> -->

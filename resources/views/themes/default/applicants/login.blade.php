@@ -1,7 +1,56 @@
 @extends('themes.default.common.master')
 @section('content')
+    @if ($errors->any())
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                @foreach ($errors->all() as $index => $error)
+                    setTimeout(function() {
+                        showErrorNotification("{{ $error }}");
+                    }, {{ $index * 300 }}); // 300ms delay between each notification
+                @endforeach
+            });
+            function showErrorNotification(message) {
+                UIkit.notification({
+                    message: message,
+                    status: 'danger',
+                    pos: 'top-center',
+                    timeout: 3000,
+                    click: true
+                });
+            }
+        </script>
+    @endif
+    @if(session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                showNotification("{{ session('success') }}");
+            });
+            function showNotification(message) {
+                UIkit.notification({
+                    message: message,
+                    status: 'primary',
+                    pos: 'top-center',
+                    timeout: 5000
+                });
+            }
+        </script>
+    @endif
+    @if(session('applicant_message'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                showNotification("{{ session('applicant_message') }}");
+            });
+            function showNotification(message) {
+                UIkit.notification({
+                    message: message,
+                    status: 'primary',
+                    pos: 'top-center',
+                    timeout: 5000
+                });
+            }
+        </script>
+    @endif
     <section class="uk-section bg-light">
-
         <div class="uk-container uk-container-large">
             <div class="uk-flex uk-flex-middle uk-flex-center">
                 <div class="uk-width-large@m ">

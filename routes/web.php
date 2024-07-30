@@ -9,6 +9,9 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
+
+use App\Http\Controllers\FrontendControllers\CustomerRegisterController;
+
 Route::get('/', 'FrontendControllers\FrontpageController@index');
 Route::get('/proposal-request/{uri?}', 'FrontendControllers\FrontpageController@proposal_request')->name('proposal-request');
 Route::post('/proposal-request/{uri?}', 'FrontendControllers\FrontpageController@proposal_request')->name('proposal-request');
@@ -52,8 +55,11 @@ Route::post('/career/careerapply/{uri}', 'FrontendControllers\FrontpageControlle
 Route::get('/applicant/apply-form', 'FrontendControllers\CareerController@apply_form')->name('applicant.applyform');
 Route::get('/applicant/register', 'FrontendControllers\CustomerRegisterController@create')->name('applicant.register');
 Route::post('/applicant/register', 'FrontendControllers\CustomerRegisterController@store')->name('applicant.register.store');
-Route::get('/applicant/login', 'FrontendControllers\CustomerRegisterController@customerlogin')->name('applicant.login');
+Route::get('/applicant/verify/{token}', [CustomerRegisterController::class, 'verify'])->name('applicant.verify');
+
+Route::get('/applicant/login', 'FrontendControllers\CustomerRegisterController@customerlogin')->name('applicant.login')->middleware('guest');
 Route::post('/applicant/login', 'FrontendControllers\CustomerRegisterController@customerlogin_action')->name('applicant.login.store');
+Route::get('/applicant/logout', 'FrontendControllers\CustomerRegisterController@customer_logout')->name('applicant.logout');
 // Circular routes
 Route::get('/customer/changepassword', 'FrontendControllers\CustomerRegisterController@changepassword')->name('customer.changepassword');
 Route::put('/customer/changepassword', 'FrontendControllers\CustomerRegisterController@changepassword_action')->name('customer.changepassword_action');

@@ -318,7 +318,7 @@
                 <li class="">
                     <a href="{{ route('applicant-list.index') }}">
                         <span class="fa fa-cogs text-info"></span>
-                        <span class="sidebar-title"> Settings </span>
+                        <span class="sidebar-title"> Career </span>
                     </a>
                 </li>
             @endif

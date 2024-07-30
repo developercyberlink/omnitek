@@ -1,6 +1,21 @@
 @extends('themes.default.common.master')
 @section('content')
     <!-- start banner -->
+    @if(session('applicant_message'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                showNotification("{{ session('applicant_message') }}");
+            });
+            function showNotification(message) {
+                UIkit.notification({
+                    message: message,
+                    status: 'primary',
+                    pos: 'top-center',
+                    timeout: 5000
+                });
+            }
+        </script>
+    @endif
     <section class="uk-position-relative">
         <div class="bg-primary uk-position-relative uk-visible-toggle home-page-slider" tabindex="-1"
              uk-slider="autoplay: true; autoplay-interval: 50000; pause-on-hover: true; clsActivated: uk-transition-active;  ">

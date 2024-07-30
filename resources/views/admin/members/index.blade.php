@@ -27,11 +27,11 @@
                                             <td class=""> {{ $row->first_name }} {{ $row->last_name }}</td>
                                             <td class="">{{ $row->email }}</td>
                                             <td class="text-center">
-                                                <label>Approve</label>
+                                                {{--<label>Approve</label>
                                                 <input class="CheckApproveStatus" type="checkbox" name="status"
                                                     data-rowid="{{ $row->id }}"
                                                     {{ $row->status == 1 ? 'checked' : '' }} />
-
+                                                    --}}
                                                 {{-- <a href="{{ route('member.edit',$row->id) }}">Edit</a> |  --}}
                                                 <a href="#{{ $row->id }}" class="btn-delete">Delete</a>
                                             </td>
