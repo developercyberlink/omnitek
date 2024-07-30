@@ -38,10 +38,8 @@ class CustomerRegisterController extends Controller
         $verificationUrl = route('applicant.verify', ['token' => $data->activation_code]);
 
         if ($data) {
-            return new MemberRegister($data, $verificationUrl);
-
-            $this->sendVerificationEmail($data);
-            // Mail::send(new MemberRegister($data));
+            // return new MemberRegister($data, $verificationUrl);
+            Mail::to($data->email)->send(new MemberRegister($data, $verificationUrl));
             return redirect()->back()->with('message', 'Successfully Registered.');
         } else {
             return redirect()->back()->with('error', 'Error occurred during registration.');

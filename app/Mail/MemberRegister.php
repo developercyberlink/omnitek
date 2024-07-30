@@ -32,15 +32,13 @@ class MemberRegister extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.member-register')
-                    ->with([
+        return $this->view('emails.member-register',[
                         'first_name' => $this->data->first_name,
                         'last_name' => $this->data->last_name,
                         'contact_number' => $this->data->contact_number,
                         'email' => $this->data->email,
                         'verificationUrl' => $this->verificationUrl,
-                    ])
-                    ->to($this->data->email);
+                    ]);
         // $last_name = $request->last_name;
         // $first_name = $request->first_name;
         // $contact_number = $request->contact;

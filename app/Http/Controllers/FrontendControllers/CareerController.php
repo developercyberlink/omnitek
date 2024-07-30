@@ -81,13 +81,14 @@ class CareerController extends Controller
             'file' => $document,
         ]);
         if ($data) {
-            return new Applicant();
+            // return new Applicant();
             Mail::send(new Applicant($data)); // Pass $data to populate email content
-            return redirect()->back()->with('message', 'Thank you for contacting us.');
-        } else {
-            return redirect()->back()->with('fmessage', 'Failed to submit form.');
+            return redirect()->back()->with('m_message', 'Thank you for contacting us.');
         }
-        return redirect()->back()->with('message', 'Submit successfully.');
+        else {
+            return redirect()->back()->with('m_message', 'Failed to submit form.');
+        }
+        return redirect()->back()->with('m_message', 'Submit successfully.');
         // } else {
         //     return back()->with('fmessage', 'You are a robot!, Please try again.');
         // }
