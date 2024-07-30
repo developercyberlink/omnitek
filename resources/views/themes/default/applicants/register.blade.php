@@ -1,5 +1,35 @@
 @extends('themes.default.common.master')
 @section('content')
+    @if(session('message'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                showNotification("{{ session('message') }}");
+            });
+            function showNotification(message) {
+                UIkit.notification({
+                    message: message,
+                    status: 'primary',
+                    pos: 'top-center',
+                    timeout: 5000
+                });
+            }
+        </script>
+    @endif
+    @if(session('error'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                showNotification("{{ session('error') }}");
+            });
+            function showNotification(message) {
+                UIkit.notification({
+                    message: message,
+                    status: 'primary',
+                    pos: 'top-center',
+                    timeout: 5000
+                });
+            }
+        </script>
+    @endif
     <section class="uk-section bg-light">
         <div class="uk-container uk-container-large">
             <div class="uk-flex uk-flex-middle uk-flex-center">

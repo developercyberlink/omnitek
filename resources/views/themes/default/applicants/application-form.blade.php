@@ -1,5 +1,20 @@
 @extends('themes.default.common.master')
 @section('content')
+    @if(session('m_message'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                showNotification("{{ session('m_message') }}");
+            });
+            function showNotification(message) {
+                UIkit.notification({
+                    message: message,
+                    status: 'primary',
+                    pos: 'top-center',
+                    timeout: 5000
+                });
+            }
+        </script>
+    @endif
     <!-- header -->
     <section
         class="uk-cover-container  uk-position-relative uk-flex uk-flex-middle uk-background-norepeat uk-background-cover"

@@ -61,7 +61,7 @@
                                     @endphp
 
                                     @if ($user->status == 1)
-                                        <a href="{{ url(geturl($row['uri'], $row['page_key'])) }}">Apply Now >></a>
+                                        <a href="{{ url(geturl($row['uri'], $row['page_key'])) }}" style="font-weight:bold;">Apply Now >></a>
                                     @else
                                         <p>Please verify your account with the email sent to your email address.</p>
                                     @endif
