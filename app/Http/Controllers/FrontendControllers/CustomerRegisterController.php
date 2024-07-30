@@ -4,10 +4,13 @@ namespace App\Http\Controllers\FrontendControllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Mail\MemberRegister;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Members\MemberModel;
 use App\Models\Circulars\CircularModel;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 class CustomerRegisterController extends Controller
 {
@@ -29,19 +32,47 @@ class CustomerRegisterController extends Controller
 
         $req = $request->all();
         $req['password'] = Hash::make($request->password);
+        $req['activation_code'] = bin2hex(random_bytes(16));
 
         $data = MemberModel::create($req);
+        $verificationUrl = route('applicant.verify', ['token' => $data->activation_code]);
+
         if ($data) {
+            return new MemberRegister($data, $verificationUrl);
+
+            $this->sendVerificationEmail($data);
+            // Mail::send(new MemberRegister($data));
             return redirect()->back()->with('message', 'Successfully Registered.');
         } else {
             return redirect()->back()->with('error', 'Error occurred during registration.');
         }
     }
 
+    public function verify($token)
+    {
+        $member = MemberModel::where('activation_code', $token)->first();
+
+        if (!$member) {
+            // If no member is found with the provided token
+            return redirect('/')->with('applicant_message', 'Invalid or expired verification token.');
+        }
+
+        // Mark the member as verified
+        $member->email_verified_at = now();
+        $member->status =  1;
+        $member->activation_code = null; // Clear the token
+
+        $member->save();
+
+        // Redirect to a success page
+        return redirect('/page/career.html')->with('applicant_message', 'Your email has been verified successfully!');
+    }
+
     // Login Form
     public function customerlogin()
     {
-        return view('themes.default.applicants.login');
+        // session()->flash('success', 'Please log in to see the details');
+        return view('themes.default.applicants.login')->with('success', 'Please log in to see the details');
     }
 
     // Login Action
@@ -55,26 +86,43 @@ class CustomerRegisterController extends Controller
         $credentials = $request->only('email', 'password');
         // Retrieve the user by email
         $customer = MemberModel::where('email', $credentials['email'])->first();
-
-        if ($customer && Hash::check($credentials['password'], $customer->password)) {
-            // 1 Administrator
-            // 2 Member
-            // 3 Wholesaler
-
-            if ($customer->role_id == 2) {
-                session(['customer_id' => $customer->id, 'member_type' => 'member', 'loginstatus' => true]);
-
-                if (Auth::guard('applicant')->attempt(['email' => $credentials['email'], 'password' => $request->password])) {
-                    return redirect('page/career.html')->with('applicant_message', 'You are a member!');
-                } else {
-                    return redirect()->back()->with('applicant_message', 'Authentication attempt failed.');
-                }
-            } else {
+        
+        if(Auth::guard('applicant')->attempt($credentials)){
+            if ($customer->role_id == 2){
+                return redirect('page/career.html')->with('applicant_message', 'You are a member!');
+            }
+            else {
                 return redirect()->back()->with('applicant_message', 'You are not a member!');
             }
-        } else {
+        }
+
+        // if ($customer && Hash::check($credentials['password'], $customer->password)) {
+        //     // 1 Administrator
+        //     // 2 Member
+        //     // 3 Wholesaler
+
+        //     if ($customer->role_id == 2) {
+        //         session(['customer_id' => $customer->id, 'member_type' => 'member', 'loginstatus' => true]);
+
+        //         if (Auth::guard('applicant')->attempt(['email' => $credentials['email'], 'password' => $request->password])) {
+        //             return redirect('page/career.html')->with('applicant_message', 'You are a member!');
+        //         } else {
+        //             return redirect()->back()->with('applicant_message', 'Authentication attempt failed.');
+        //         }
+        //     } else {
+        //         return redirect()->back()->with('applicant_message', 'You are not a member!');
+        //     }
+        // } 
+        else {
+            // dd('test');
             return redirect()->back()->with('applicant_message', 'Invalid Email or Password!');
         }
+    }
+
+    public function customer_logout(){
+        Session::flush();
+        Auth::guard('applicant')->logout();
+        return redirect('/');
     }
 
     // Customer Logout

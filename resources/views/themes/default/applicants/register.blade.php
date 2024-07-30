@@ -13,7 +13,7 @@
                                     aria-label="Large">
                             </div>
                             <div class="uk-margin">
-                                <input class="uk-input uk-width-1-1" name="last_name" type="text" placeholder="Full Name"
+                                <input class="uk-input uk-width-1-1" name="last_name" type="text" placeholder="Last Name"
                                     aria-label="Large">
                             </div>
                             <div class="uk-margin">

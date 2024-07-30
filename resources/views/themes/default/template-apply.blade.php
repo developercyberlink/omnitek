@@ -16,7 +16,7 @@
                     <div class="uk-light">
                         <ul class="uk-breadcrumb">
                             <li><a href="{{ url('/') }}">Home</a></li>
-                            <li><span>{{ $data->post_type }}</span></li>
+                            <li><span>{{ $data->post_title }}</span></li>
                         </ul>
                     </div>
                     <h1 class="uk-h1 uk-text-bold text-white uk-margin-small">Apply Now</h1>

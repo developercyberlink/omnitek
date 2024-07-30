@@ -36,7 +36,8 @@ class Applicant extends Mailable
         $first_name = $request->first_name;
         $contact_number = $request->contact;
         $email = $request->email;
-
-        return $this->view('emails.applicant', ['first_name' => $first_name, 'last_name' => $last_name, 'contact_number' => $contact_number, 'email' => $email])->to($mail);
+        $filePath = storage_path('uploads/doc/'.$request->file);;
+        return $this->view('emails.applicant', ['first_name' => $first_name, 'last_name' => $last_name, 'contact_number' => $contact_number, 'email' => $email])->to($mail)->attach($filePath);
     }
 }
+ 
